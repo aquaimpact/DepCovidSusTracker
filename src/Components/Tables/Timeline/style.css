@@ -1,0 +1,14 @@
+.error{
+    background-color: #da1e28;
+    color: white;
+}
+
+.minor{
+    background-color: #ff832b;
+    color: white;
+}
+
+.noError{
+    background-color: #24a148;
+    color: white;
+}
