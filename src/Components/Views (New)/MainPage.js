@@ -207,8 +207,10 @@ class MainPage extends React.Component {
 		let series2 = []
 
 		var strings = this.state.mapData;
+		console.log("populateGraph1 : String = ", strings)
 
 		var numbers = strings.match(/\d+/g).map(Number);
+		console.log("populateGraph1 : NumberS: ", numbers)
 
 		numbers.forEach(x => {
 			let data = []
@@ -375,17 +377,19 @@ class MainPage extends React.Component {
 		}
 
 		let options
+		console.log("is testing undefined? : ", testing !== undefined)
 		//// ### UNCOMMENT FOR GANTT CHART ###
 		if (testing !== undefined) {
 
 			let lol = function (event, chartContext, config) {
-
-				that.setState({ placename: testing[config.seriesIndex].data[config.dataPointIndex].x, datetime: testing[config.seriesIndex].data[config.dataPointIndex].y })
-
 				placename = testing[config.seriesIndex].data[config.dataPointIndex].x
-
+				console.log("placename : ", placename)
 				fetch("https://internshipcsit.herokuapp.com/getMovementForDate?placeName=" + testing[config.seriesIndex].data[config.dataPointIndex].x + "&dates=" + testing[config.seriesIndex].data[config.dataPointIndex].y + "&personName=" + testing[config.seriesIndex].name)
-					.then(response => response.json()).then(data => that.setState({ datas: data })).catch(err => { console.log(err); });
+					.then(response => response.json()).then(data => that.setState({ 
+						datas: data,
+						placename: testing[config.seriesIndex].data[config.dataPointIndex].x, 
+						datetime: testing[config.seriesIndex].data[config.dataPointIndex].y 
+					})).catch(err => { console.log(err); });
 			}
 
 			options = {

@@ -34,7 +34,7 @@ class MainMap extends React.Component{
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom
         });
-
+        
         // Create a popup, but don't add it to the map yet.
         var popup2 = new mapboxgl.Popup({
             closeButton: false,
@@ -110,8 +110,41 @@ class MainMap extends React.Component{
             return true;
             }
         };
-
+        map.on('click', 'placeIDs', this.clickhandler);
+        map.on('mouseenter', 'placeIDs',this.mouseEnterHandler);
+        map.on('mouseleave','placeIDs',this.mouseLeaveHandler);
         map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+    }
+
+    clickhandler = (e) => {
+
+        var movementID = e.features[0].properties.movementID;
+        console.log("movemendID : ", movementID)
+        this.props.dataRetrieved(movementID)
+    }
+
+    mouseEnterHandler = (e) => {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+                            
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+    }
+
+    mouseLeaveHandler = (e) => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
     }
 
     static generateColor(){
@@ -258,49 +291,50 @@ class MainMap extends React.Component{
             });
 
             for(var key in map.style.sourceCaches){
-                console.log(key)
+                // console.log(key)
                 if(key != 'composite'){
                     map.removeLayer(key)
-                    if(key == "placeIDs"){
-                        map.off('click', 'placeIDs', function(e){
+                    // if(key == "placeIDs"){
+                    //     map.off('click', 'placeIDs', function(e){
 
-                            var placeID = e.features[0].properties.placeID;           
-                            var description = e.features[0].properties.description;
-                            var movementID = e.features[0].properties.movementID;
-                            var enter = e.features[0].properties.enter;
-                            var leave = e.features[0].properties.leave;
+                    //         var placeID = e.features[0].properties.placeID;           
+                    //         var description = e.features[0].properties.description;
+                    //         var movementID = e.features[0].properties.movementID;
+                    //         var enter = e.features[0].properties.enter;
+                    //         var leave = e.features[0].properties.leave;
                             
-                            props.dataRetrieved(movementID)
+                    //         props.dataRetrieved(movementID) 
             
-
-                        });
+                    //         console.log("disconnected listeners")
+                    //     });
             
-                        map.off('mouseenter', 'placeIDs', function(e) {
+                    //     map.off('mouseenter', 'placeIDs', function(e) {
             
-                            // Change the cursor style as a UI indicator.
-                            map.getCanvas().style.cursor = 'pointer';
+                    //         // Change the cursor style as a UI indicator.
+                    //         map.getCanvas().style.cursor = 'pointer';
                             
-                            var coordinates = e.features[0].geometry.coordinates.slice();
-                            var description = e.features[0].properties.description;
+                    //         var coordinates = e.features[0].geometry.coordinates.slice();
+                    //         var description = e.features[0].properties.description;
             
-                            // Ensure that if the map is zoomed out such that multiple
-                            // copies of the feature are visible, the popup appears
-                            // over the copy being pointed to.
-                            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                            }
+                    //         // Ensure that if the map is zoomed out such that multiple
+                    //         // copies of the feature are visible, the popup appears
+                    //         // over the copy being pointed to.
+                    //         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    //             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    //         }
                             
-                            // Populate the popup and set its coordinates
-                            // based on the feature found.
-                            popup.setLngLat(coordinates).setHTML(description).addTo(map);
-                        });
+                    //         // Populate the popup and set its coordinates
+                    //         // based on the feature found.
+                    //         popup.setLngLat(coordinates).setHTML(description).addTo(map);
+                    //     });
                             
-                        map.off('mouseleave', 'placeIDs', function() {
-                            map.getCanvas().style.cursor = '';
-                            popup.remove();
-                        });
-                    }
+                    //     map.off('mouseleave', 'placeIDs', function() {
+                    //         map.getCanvas().style.cursor = '';
+                    //         popup.remove();
+                    //     });
+                    // }
                     map.removeSource(key)
+                    // console.log("confirmed removal of key ", key)
                 }
                 // console.log(map.getStyle().layers)
             }
@@ -314,7 +348,7 @@ class MainMap extends React.Component{
                 while(sourceIDs.includes(lol)){
                     lol = Math.floor(Math.random() * 101).toString()
                 }
-
+                // console.log("now adding key : ", lol)
                 let UMovements = e.movements.map(x => {
                     return([x.locationLong, x.locationLat])
                 })
@@ -372,39 +406,34 @@ class MainMap extends React.Component{
                 }
             });
 
-            map.on('click', 'placeIDs', function(e){
 
-                var movementID = e.features[0].properties.movementID;
+
+            // map.on('mouseenter', 'placeIDs', function(e) {
+
+            //     // Change the cursor style as a UI indicator.
+            //     map.getCanvas().style.cursor = 'pointer';
                 
-                props.dataRetrieved(movementID)
-            });
+            //     var coordinates = e.features[0].geometry.coordinates.slice();
+            //     var description = e.features[0].properties.description;
 
-            map.on('mouseenter', 'placeIDs', function(e) {
-
-                // Change the cursor style as a UI indicator.
-                map.getCanvas().style.cursor = 'pointer';
+            //     // Ensure that if the map is zoomed out such that multiple
+            //     // copies of the feature are visible, the popup appears
+            //     // over the copy being pointed to.
+            //     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            //         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            //     }
                 
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var description = e.features[0].properties.description;
-
-                // Ensure that if the map is zoomed out such that multiple
-                // copies of the feature are visible, the popup appears
-                // over the copy being pointed to.
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }
+            //     // Populate the popup and set its coordinates
+            //     // based on the feature found.
+            //     popup.setLngLat(coordinates).setHTML(description).addTo(map);
+            // });
                 
-                // Populate the popup and set its coordinates
-                // based on the feature found.
-                popup.setLngLat(coordinates).setHTML(description).addTo(map);
-            });
-                
-            map.on('mouseleave', 'placeIDs', function() {
-                map.getCanvas().style.cursor = '';
-                popup.remove();
-            });
+            // map.on('mouseleave', 'placeIDs', function() {
+            //     map.getCanvas().style.cursor = '';
+            //     popup.remove();
+            // });
 
-            counter += 1
+            // counter += 1
         } 
         
         return true;
