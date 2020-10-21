@@ -304,10 +304,16 @@ class MainMap extends React.Component{
                 }
                 // console.log(map.getStyle().layers)
             }
+
+            var sourceIDs = []
             
             mappedResults.forEach(e => {
 
                 let lol = Math.floor(Math.random() * 101).toString()
+
+                while(sourceIDs.includes(lol)){
+                    lol = Math.floor(Math.random() * 101).toString()
+                }
 
                 let UMovements = e.movements.map(x => {
                     return([x.locationLong, x.locationLat])
@@ -341,6 +347,8 @@ class MainMap extends React.Component{
                         'line-width': 5
                     }
                 });
+
+                sourceIDs.push(lol)
             })
 
             map.addSource('placeIDs', {
