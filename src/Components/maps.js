@@ -112,7 +112,46 @@ class Maps extends React.Component{
             }
         };
 
+        map.on('click', 'places', this.mapClicked);
+
+        map.on('mouseenter', 'places', this.mapEnter);
+            
+        map.on('mouseleave', 'places', this.mapLeave);
+
         map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+    }
+
+    mapClicked = (e) => {
+        var description = e.features[0].properties.description;
+        var movementID = e.features[0].properties.movementID;
+        var enter = e.features[0].properties.enter;
+        var leave = e.features[0].properties.leave;
+        // console.log(movementID)
+        this.getPeople(movementID, enter, leave)
+    }
+
+    mapEnter = (e)  => {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+            
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+        
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+    }
+
+    mapLeave = () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
     }
 
     getDatetime(datetime, selection){
@@ -162,37 +201,6 @@ class Maps extends React.Component{
             console.log(key)
             if(key != 'composite'){
                 map.removeLayer(key)
-                if(key == "placeIDs"){
-                    map.off('click', 'placeIDs', function(e){
-        
-                        // that.getPeople(movementID, enter, leave)
-                    });
-        
-                    map.off('mouseenter', 'placeIDs', function(e) {
-        
-                        // Change the cursor style as a UI indicator.
-                        map.getCanvas().style.cursor = 'pointer';
-                        
-                        var coordinates = e.features[0].geometry.coordinates.slice();
-                        var description = e.features[0].properties.description;
-        
-                        // Ensure that if the map is zoomed out such that multiple
-                        // copies of the feature are visible, the popup appears
-                        // over the copy being pointed to.
-                        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                        }
-                        
-                        // Populate the popup and set its coordinates
-                        // based on the feature found.
-                        popup.setLngLat(coordinates).setHTML(description).addTo(map);
-                    });
-                        
-                    map.off('mouseleave', 'placeIDs', function() {
-                        map.getCanvas().style.cursor = '';
-                        popup.remove();
-                    });
-                }
                 map.removeSource(key)
             }
             // console.log(map.getStyle().layers)
@@ -277,39 +285,6 @@ class Maps extends React.Component{
         });
 
         console.log("Maps debug 5")
-        
-        map.on('click', 'places', function(e){
-            var description = e.features[0].properties.description;
-            var movementID = e.features[0].properties.movementID;
-            var enter = e.features[0].properties.enter;
-            var leave = e.features[0].properties.leave;
-            // console.log(movementID)
-            that.getPeople(movementID, enter, leave)
-        });
-
-        map.on('mouseenter', 'places', function(e) {
-            // Change the cursor style as a UI indicator.
-            map.getCanvas().style.cursor = 'pointer';
-            
-            var coordinates = e.features[0].geometry.coordinates.slice();
-            var description = e.features[0].properties.description;
-            
-            // Ensure that if the map is zoomed out such that multiple
-            // copies of the feature are visible, the popup appears
-            // over the copy being pointed to.
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-            
-            // Populate the popup and set its coordinates
-            // based on the feature found.
-            popup.setLngLat(coordinates).setHTML(description).addTo(map);
-        });
-            
-        map.on('mouseleave', 'places', function() {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-        });
     }
 
     render(){
