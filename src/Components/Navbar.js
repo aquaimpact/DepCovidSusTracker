@@ -178,31 +178,6 @@ class TopNavBar extends React.Component{
         })
 
         console.log(series2)
-
-        // console.log(this.state.mapData[0])
-        // if(Array.isArray(this.state.mapData)){
-        //     console.log("NAY")
-        //     
-        // }
-        // this.state.suspectCases.forEach(suspect => {
-        //     let data = []
-
-        //     this.state.movements.filter(moves => moves.suspectId === suspect.id).forEach(movement => {
-        //         data.push(
-        //             {
-        //                 x: movement.locationShortaddress,
-        //                 y: [this.convertDate(movement.datetimeEntered),this.convertDate(movement.datetimeLeft)]
-        //             }
-        //         )
-        //     })
-
-        //     series2.push(
-        //         {
-        //             name: suspect.firstName + " " + suspect.lastName,
-        //             data: data
-        //         }
-        //     )
-        // })
         return series2
     }
 
