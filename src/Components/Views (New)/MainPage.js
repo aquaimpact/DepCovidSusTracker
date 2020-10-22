@@ -51,7 +51,6 @@ class MainPage extends React.Component {
 		this.uploadFile2 = this.uploadFile2.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleClick2 = this.handleClick2.bind(this);
-		this.getlegends = this.getlegends.bind(this);
 		this.legends = {};
 		this.state = {
 			dropDownValue: "All Suspects",
@@ -339,13 +338,8 @@ class MainPage extends React.Component {
 		});
 	};
 
-	getlegends(getlegend){
-		this.legends = getlegend
-		// this.forceUpdate()
-	}
-
 	dataRetrievedMap = (dataFromChild) => {
-		this.setState({ mapData: dataFromChild })
+		this.setState({ mapData: dataFromChild,  datas:[]})
 	}
 
 	render() {

@@ -16,11 +16,10 @@ function App() {
 
     return(
       <>
-        <script crossorigin src="https://internshipcsit.herokuapp.com"></script>
         <div className="App">
           <Route exact path={`/`} render={ (routerProps) => < MainPage/>} />
           {/* <Graph display={displaySetting}/> */}
-      </div>
+        </div>
       </>
       
     );

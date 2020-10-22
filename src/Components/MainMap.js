@@ -200,7 +200,12 @@ class MainMap extends React.Component{
         return finalDatetime
     }
 
-    static hexColorDelta(hex1, hex2) {
+    static hexColorDelta(oldHex1, oldHex2) {
+
+        // Since values coming in are #<...>, we need to remove them
+        var hex1 = oldHex1.substring(1, oldHex1.length)
+        var hex2 = oldHex2.substring(1, oldHex2.length)
+
         // get red/green/blue int values of hex1
         var r1 = parseInt(hex1.substring(0, 2), 16);
         var g1 = parseInt(hex1.substring(2, 4), 16);
@@ -352,9 +357,11 @@ class MainMap extends React.Component{
 
                 let color = MainMap.generateColor()
                 if(colorPrevious != ""){
-                    while(MainMap.hexColorDelta(color, colorPrevious) > 0.2){
+                    console.log("Main Map: ", color)
+                    while(MainMap.hexColorDelta(color, colorPrevious) > 0.5){
                         color = MainMap.generateColor()
                     }
+                    console.log("Color Similarity Thrashhold:", MainMap.hexColorDelta(color, colorPrevious))
                 }
                 colorPrevious = color
 
