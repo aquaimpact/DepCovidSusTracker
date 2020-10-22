@@ -361,7 +361,7 @@ class MainMap extends React.Component{
                     while(MainMap.hexColorDelta(color, colorPrevious) > 0.5){
                         color = MainMap.generateColor()
                     }
-                    console.log("Color Similarity Thrashhold:", MainMap.hexColorDelta(color, colorPrevious))
+                    console.log("Color Similarity Threshold:", MainMap.hexColorDelta(color, colorPrevious))
                 }
                 colorPrevious = color
 
