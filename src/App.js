@@ -15,10 +15,14 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 function App() {
 
     return(
-      <div className="App">
-        <Route exact path={`/`} render={ (routerProps) => < MainPage/>} />
-        {/* <Graph display={displaySetting}/> */}
+      <>
+        <script crossorigin src="https://internshipcsit.herokuapp.com"></script>
+        <div className="App">
+          <Route exact path={`/`} render={ (routerProps) => < MainPage/>} />
+          {/* <Graph display={displaySetting}/> */}
       </div>
+      </>
+      
     );
 }
 

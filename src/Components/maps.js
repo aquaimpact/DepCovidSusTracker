@@ -291,7 +291,7 @@ class Maps extends React.Component{
 
         return(
             <div style={{position:"relative",height:"300px", width:"100%"}}>
-                <div ref={el => this.mapContainer = el} style={{position:"reletive", width:"inherit", height:"inherit"}}/>
+                <div ref={el => this.mapContainer = el} style={{position:"reletive", width:"inherit", height:"inherit", overflow: "visible"}}/>
             </div>
             
         )
