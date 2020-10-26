@@ -687,7 +687,7 @@ class MainPage extends React.Component {
 									<Row className="row-grid align-items-center">
 										<Row className="justify-content-center text-center mb-lg">
 											<Col lg="8">
-												<h2 className="display-3">Gantt Chart</h2>
+												<h2 className="display-3">Intersection Between Suspects</h2>
 												<p className="lead text-muted">
 													================================================
 													<br />CLICK ON THE GANTT CHART AND SCROLL TO TABLE
@@ -816,8 +816,12 @@ class MainPage extends React.Component {
 											</CardBody>
 										</Card>
 									</Container>
-									{/* SVG separator */}
-									<div className="separator separator-bottom separator-skew zindex-100">
+									<div style={{height:"100px"}}></div>
+									
+								</section>
+
+								{/* SVG separator */}
+								<div className="separator separator-bottom separator-skew zindex-100">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											preserveAspectRatio="none"
@@ -832,7 +836,6 @@ class MainPage extends React.Component {
 											/>
 										</svg>
 									</div>
-								</section>
 								
 								{/* TRANSFER SECTION */}
 								<div>
