@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/DepCovidSusTracker/static/css/main.29055d70.chunk.css",
-    "main.js": "/DepCovidSusTracker/static/js/main.a581649c.chunk.js",
-    "main.js.map": "/DepCovidSusTracker/static/js/main.a581649c.chunk.js.map",
+    "main.js": "/DepCovidSusTracker/static/js/main.24ac8b26.chunk.js",
+    "main.js.map": "/DepCovidSusTracker/static/js/main.24ac8b26.chunk.js.map",
     "runtime-main.js": "/DepCovidSusTracker/static/js/runtime-main.7abf9eda.js",
     "runtime-main.js.map": "/DepCovidSusTracker/static/js/runtime-main.7abf9eda.js.map",
     "static/css/2.e0a09fb6.chunk.css": "/DepCovidSusTracker/static/css/2.e0a09fb6.chunk.css",
-    "static/js/2.684766e0.chunk.js": "/DepCovidSusTracker/static/js/2.684766e0.chunk.js",
-    "static/js/2.684766e0.chunk.js.map": "/DepCovidSusTracker/static/js/2.684766e0.chunk.js.map",
+    "static/js/2.4c653be6.chunk.js": "/DepCovidSusTracker/static/js/2.4c653be6.chunk.js",
+    "static/js/2.4c653be6.chunk.js.map": "/DepCovidSusTracker/static/js/2.4c653be6.chunk.js.map",
     "index.html": "/DepCovidSusTracker/index.html",
-    "precache-manifest.8f517bb7ffc86a5312dbab0c31a7d0fb.js": "/DepCovidSusTracker/precache-manifest.8f517bb7ffc86a5312dbab0c31a7d0fb.js",
+    "precache-manifest.4d6b393daa9c85c12d9c413158930e57.js": "/DepCovidSusTracker/precache-manifest.4d6b393daa9c85c12d9c413158930e57.js",
     "service-worker.js": "/DepCovidSusTracker/service-worker.js",
     "static/css/2.e0a09fb6.chunk.css.map": "/DepCovidSusTracker/static/css/2.e0a09fb6.chunk.css.map",
     "static/css/main.29055d70.chunk.css.map": "/DepCovidSusTracker/static/css/main.29055d70.chunk.css.map",
-    "static/js/2.684766e0.chunk.js.LICENSE.txt": "/DepCovidSusTracker/static/js/2.684766e0.chunk.js.LICENSE.txt",
+    "static/js/2.4c653be6.chunk.js.LICENSE.txt": "/DepCovidSusTracker/static/js/2.4c653be6.chunk.js.LICENSE.txt",
     "static/media/argon-react-white.png": "/DepCovidSusTracker/static/media/argon-react-white.275a2629.png",
     "static/media/csit-logo.png": "/DepCovidSusTracker/static/media/csit-logo.c921008d.png",
     "static/media/font-awesome.min.css": "/DepCovidSusTracker/static/media/fontawesome-webfont.fee66e71.woff",
@@ -24,8 +24,8 @@
   "entrypoints": [
     "static/js/runtime-main.7abf9eda.js",
     "static/css/2.e0a09fb6.chunk.css",
-    "static/js/2.684766e0.chunk.js",
+    "static/js/2.4c653be6.chunk.js",
     "static/css/main.29055d70.chunk.css",
-    "static/js/main.a581649c.chunk.js"
+    "static/js/main.24ac8b26.chunk.js"
   ]
 }
