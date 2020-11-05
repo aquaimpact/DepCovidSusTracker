@@ -76,14 +76,29 @@ class TimelineChart extends React.Component{
                 tableprops = this.state.retrieved[count].map(data => {
 
                     let range2 = moment.range(data.datetimeEntered, data.datetimeLeft)
-                    let minIntersect = range.intersect(range2).diff('minute')
+                    console.log("Timeline Time Range 2 Diff: ", range2)
+                    console.log("Timeline Time Range 1 Diff: ", range)
+                    console.log("Intersection Time:", range.intersect(range2))
 
-                    return({
-                        name: data.firstName + " " + data.lastName,
-                        datetime: this.convertSQLDate(data.datetimeEntered, data.datetimeLeft),
-                        intersectTime: minIntersect + " min",
-                        intersection: ""
-                    })
+                    if(range.intersect(range2) != null){
+
+                        console.log(data.firstName + " " + data.lastName)
+
+                        let minIntersect = range.intersect(range2).diff('minute')
+
+
+                        return({
+                            name: data.firstName + " " + data.lastName,
+                            datetime: this.convertSQLDate(data.datetimeEntered, data.datetimeLeft),
+                            intersectTime: minIntersect + " min",
+                            intersection: ""
+                        })
+                    }
+                    else{
+                        return
+                    }
+
+
                 })
             }
            

@@ -39,6 +39,7 @@ import {
 
 // core components
 import DemoNavbar from "./Navbars/DemoNavbar.js";
+import { values } from "ramda";
 
 
 let testing
@@ -378,6 +379,7 @@ class MainPage extends React.Component {
 			let lol = function (event, chartContext, config) {
 				placename = testing[config.seriesIndex].data[config.dataPointIndex].x
 				console.log("placename : ", placename)
+				console.log("https://internshipcsit.herokuapp.com/getMovementForDate?placeName=" + testing[config.seriesIndex].data[config.dataPointIndex].x + "&dates=" + testing[config.seriesIndex].data[config.dataPointIndex].y + "&personName=" + testing[config.seriesIndex].name)
 				fetch("https://internshipcsit.herokuapp.com/getMovementForDate?placeName=" + testing[config.seriesIndex].data[config.dataPointIndex].x + "&dates=" + testing[config.seriesIndex].data[config.dataPointIndex].y + "&personName=" + testing[config.seriesIndex].name)
 					.then(response => response.json()).then(data => that.setState({ 
 						datas: data,
@@ -385,6 +387,8 @@ class MainPage extends React.Component {
 						datetime: testing[config.seriesIndex].data[config.dataPointIndex].y 
 					})).catch(err => { console.log(err); });
 			}
+
+			let count = 0
 
 			options = {
 				options: {
@@ -401,9 +405,13 @@ class MainPage extends React.Component {
 					xaxis: {
 						type: 'datetime',
 						labels: {
-							datetimeFormatter:{
-								hour: 'HH:mm'
-							}
+							formatter: function (value, timestamp) {
+								
+								let date = new Date(value)
+								var newDate = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',')[date.getMonth()];
+
+								return `${date.getDate()} ${newDate} ${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}` // The formatter function overrides format property
+							},
 						}
 					},
 					stroke: {
@@ -418,7 +426,44 @@ class MainPage extends React.Component {
 						horizontalAlign: 'left'
 					},
 					tooltip: {
+						x:{
+							formatter: function (value, timestamp) {
+								
+								console.log("")
+								console.log("count: ",count, " value: ", value)
 
+								if(count % 3 == 0){
+									count = 0
+								}
+
+								count += 1
+
+								
+								console.log("ID number:", count)
+								console.log("Timestamps:", timestamp)
+								console.log("Values:", value)
+
+								if(count == 3){
+
+									var startTime = timestamp.series[0][0]
+									var endTime = timestamp.series[1][0]
+									let startDate = new Date(startTime)
+									let endDate = new Date(endTime)
+
+									console.log("Start Date", startDate)
+
+									var newDate = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',')[startDate.getMonth()];
+									var test =  `${startDate.getDate()} ${newDate} ${startDate.getHours()}:${(startDate.getMinutes()<10?'0':'') + startDate.getMinutes()} - ${endDate.getHours()}:${(endDate.getMinutes()<10?'0':'') + endDate.getMinutes()}` // The formatter function overrides format property
+
+									console.log("concat val:", test)
+
+									return `${startDate.getDate()} ${newDate} ${startDate.getHours()}:${(startDate.getMinutes()<10?'0':'') + startDate.getMinutes()} - ${endDate.getHours()}:${(endDate.getMinutes()<10?'0':'') + endDate.getMinutes()}` // The formatter function overrides format property
+								}
+								else{
+									return new Date(timestamp)
+								}
+							},
+						}
 					},
 				}
 			}
