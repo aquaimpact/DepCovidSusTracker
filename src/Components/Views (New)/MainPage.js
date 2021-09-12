@@ -78,6 +78,7 @@ class MainPage extends React.Component {
 			suspectCasesOriginal: [],
 			movementsOriginal: [],
 			legends:{},
+			concatTime:"",
 		}
 	}
 
@@ -389,6 +390,8 @@ class MainPage extends React.Component {
 			}
 
 			let count = 0
+			
+			let tests = {}
 
 			options = {
 				options: {
@@ -429,8 +432,8 @@ class MainPage extends React.Component {
 						x:{
 							formatter: function (value, timestamp) {
 								
-								console.log("")
-								console.log("count: ",count, " value: ", value)
+								// console.log("")
+								// console.log("count: ",count, " value: ", value)
 
 								if(count % 3 == 0){
 									count = 0
@@ -439,28 +442,34 @@ class MainPage extends React.Component {
 								count += 1
 
 								
-								console.log("ID number:", count)
-								console.log("Timestamps:", timestamp)
-								console.log("Values:", value)
+								// console.log("ID number:", count)
+								// console.log("Timestamps:", timestamp)
+								// console.log("Values:", value)
 
-								if(count == 3){
+								if(count != 3){
 
-									var startTime = timestamp.series[0][0]
-									var endTime = timestamp.series[1][0]
-									let startDate = new Date(startTime)
-									let endDate = new Date(endTime)
 
-									console.log("Start Date", startDate)
+									tests = {...tests, [count]:value}
+									// console.log(tests)
+									if(count == 2){
 
-									var newDate = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',')[startDate.getMonth()];
-									var test =  `${startDate.getDate()} ${newDate} ${startDate.getHours()}:${(startDate.getMinutes()<10?'0':'') + startDate.getMinutes()} - ${endDate.getHours()}:${(endDate.getMinutes()<10?'0':'') + endDate.getMinutes()}` // The formatter function overrides format property
+										var startTime = tests["1"]
+										var endTime = tests["2"]
+										let startDate = new Date(startTime)
+										let endDate = new Date(endTime)
 
-									console.log("concat val:", test)
+										// console.log("Start Date", startDate)
 
-									return `${startDate.getDate()} ${newDate} ${startDate.getHours()}:${(startDate.getMinutes()<10?'0':'') + startDate.getMinutes()} - ${endDate.getHours()}:${(endDate.getMinutes()<10?'0':'') + endDate.getMinutes()}` // The formatter function overrides format property
-								}
-								else{
-									return new Date(timestamp)
+										var newDate = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',')[startDate.getMonth()];
+										var test =  `${startDate.getDate()} ${newDate} ${startDate.getHours()}:${(startDate.getMinutes()<10?'0':'') + startDate.getMinutes()} - ${endDate.getHours()}:${(endDate.getMinutes()<10?'0':'') + endDate.getMinutes()}` // The formatter function overrides format property
+
+										// console.log("concat val:", test)
+
+										return test
+									}
+									else{
+										return ""
+									}
 								}
 							},
 						}
